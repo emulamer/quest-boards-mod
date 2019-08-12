@@ -33,6 +33,6 @@ include $(CLEAR_VARS)
 LOCAL_CFLAGS := -w
 LOCAL_LDLIBS := -llog
 LOCAL_MODULE    := questboardsmod
-LOCAL_SRC_FILES := main.cpp fakes.cpp ./inline-hook/inlineHook.c ./inline-hook/relocate.c
+LOCAL_SRC_FILES := main.cpp fakes.cpp Leaderboards.cpp ./inline-hook/inlineHook.c ./inline-hook/relocate.c
 LOCAL_STATIC_LIBRARIES += curl_static
 include $(BUILD_SHARED_LIBRARY)

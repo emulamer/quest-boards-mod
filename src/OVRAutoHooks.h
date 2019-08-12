@@ -1,4 +1,5 @@
 #include "Utils.h"
+#include "inline-hook/And64InlineHook.hpp"
 #include "../OVRPlatformSDK/Include/OVR_AbuseReportOptions.h"
 #include "../OVRPlatformSDK/Include/OVR_AbuseReportRecording.h"
 #include "../OVRPlatformSDK/Include/OVR_AbuseReportType.h"
@@ -150,7 +151,7 @@
 #include "../OVRPlatformSDK/Include/OVR_VoipSampleRate.h"
 #include "../OVRPlatformSDK/Include/OVR_Voip_LowLevel.h"
 
-
+#include "fakes.h"
 HOOK_DEF(ovr_AbuseReportOptions_Create, ovrAbuseReportOptionsHandle, )
 {
 	auto ret = ovr_AbuseReportOptions_Create_def();
@@ -1381,13 +1382,16 @@ HOOK_DEF(ovr_MatchmakingEnqueuedUserArray_GetElement, ovrMatchmakingEnqueuedUser
 {
 	auto ret = ovr_MatchmakingEnqueuedUserArray_GetElement_def(obj, index);
 	log("ovr_MatchmakingEnqueuedUserArray_GetElement called with %d %d  and returned %d", obj, index,  ret);
+
 	return ret;
 }
+int lastSize;
 HOOK_DEF(ovr_MatchmakingEnqueuedUserArray_GetSize, size_t, const ovrMatchmakingEnqueuedUserArrayHandle obj)
 {
 	auto ret = ovr_MatchmakingEnqueuedUserArray_GetSize_def(obj);
 	log("ovr_MatchmakingEnqueuedUserArray_GetSize called with %d  and returned %d", obj,  ret);
-	return ret;
+	lastSize = ret;
+	return ret + 1;
 }
 HOOK_DEF(ovr_MatchmakingEnqueueResult_GetAdminSnapshot, ovrMatchmakingAdminSnapshotHandle, const ovrMatchmakingEnqueueResultHandle obj)
 {
@@ -3473,7 +3477,6 @@ HOOK_DEF(ovr_UserAndRoomArray_HasNextPage, bool, const ovrUserAndRoomArrayHandle
 HOOK_DEF(ovr_UserArray_GetElement, ovrUserHandle, const ovrUserArrayHandle obj, size_t index)
 {
 	auto ret = ovr_UserArray_GetElement_def(obj, index);
-	log("ovr_UserArray_GetElement called with %d %d  and returned %d", obj, index,  ret);
 	return ret;
 }
 HOOK_DEF(ovr_UserArray_GetNextUrl, const char *, const ovrUserArrayHandle obj)

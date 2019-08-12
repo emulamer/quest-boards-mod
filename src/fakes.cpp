@@ -27,6 +27,10 @@ void FakeUser::Free()
 {
     delete this; 
 }
+void FakeUpdateLeaderboardStatusMessage::Free()
+{
+    delete this;
+}
 void FakeLeaderboardEntryArrayMessage::Free()
 {
     std::vector<FakeLeaderboardEntry*>::iterator it;
@@ -56,7 +60,6 @@ void Fake::untrackFake(void* handle)
 
 bool Fake::IsFake(void* handle)
 {
-
     return Fake::fakePtrs.find(handle) != fakePtrs.end();
 }
 
@@ -90,4 +93,9 @@ FakeMessage* FakeMessage::getNextReady()
     }
 
     return NULL;
+}
+
+FakeUpdateLeaderboardStatusMessage::FakeUpdateLeaderboardStatusMessage()
+{
+    MessageType = ovrMessageType::ovrMessage_Leaderboard_WriteEntry;
 }

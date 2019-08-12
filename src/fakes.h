@@ -1,8 +1,11 @@
-#include "main.h"
 #include <vector>
 #include <set>
 #include "../OVRPlatformSDK/Include/OVR_MessageType.h"
 #include "../OVRPlatformSDK/Include/OVR_UserPresenceStatus.h"
+#ifndef fakes_h
+#define fakes_h
+
+
 class Fake
 {
     public:
@@ -57,6 +60,14 @@ class FakeLeaderboardEntry : public Fake
         void Free();
 };
 
+class FakeUpdateLeaderboardStatusMessage : public FakeMessage
+{
+    public:
+        FakeUpdateLeaderboardStatusMessage();
+        bool didUpdate;
+        void Free();
+};
+
 class FakeLeaderboardEntryArrayMessage : public FakeMessage
 {
     public:
@@ -67,3 +78,4 @@ class FakeLeaderboardEntryArrayMessage : public FakeMessage
 };
 
 
+#endif
